@@ -20,11 +20,13 @@ router.post('/addMember', async function(req, res) {
       memberDescription: req.body.memberDescription,
     })
     var memberSaved = await newMember.save()
+    var memberList = await membersModel.find();
+    console.log('memberList', memberList)
     //console.log('memberSaved:', memberSaved)
     exist = true;
-    res.json({memberSaved, message: 'Bienvenue à bord!'});
+    res.json({memberSaved, message: 'Bienvenue à bord!', memberList });
   } else {
-    res.json({message : 'Membre déjà enregistré!'});
+    res.json({message : 'Membre déjà enregistré!', memberList});
   }
 
   

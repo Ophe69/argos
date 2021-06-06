@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Button, Form, FormGroup, Input } from 'reactstrap'; //, Label
+import { Button, Form, FormGroup, Input} from 'reactstrap'; //, Label, Container, Row, Col, ListGroup, ListGroupItem
 
 
 function App() {
   const [memberName, setMemberName] = useState('');
   const [memberDescription, setMemberDescription] = useState(''); 
+  const [message, setMessage] = useState('');
+  const [memberList, setMemberList] = useState([]);
 
   var handleSubmitClick = async () => {
     const data = await fetch('/addMember', {
@@ -16,7 +18,19 @@ function App() {
     })
       const response = await data.json();
       console.log('response', response);
+      setMemberList(response.memberList);
+      setMessage(response.message);
   }
+
+  var clickAddMember = (newMember) =>{
+    setMemberList([...memberList, newMember]);
+  }
+/*   var memberListChart = memberList.map((member, i)=>{
+    <ListGroup horizontal="lg">
+        <ListGroupItem tag="a" href="#">Cras justo odio</ListGroupItem>
+      </ListGroup>
+  }); */
+  
 
   return (
     <div className="App">
@@ -56,16 +70,29 @@ function App() {
                 setMemberDescription('');
                 //console.log('info user from front', memberName, memberDescription);
                 handleSubmitClick();
+                clickAddMember();
               }}
             >Ajouter</Button>
           </Form>
+          <div>
+            <h6>{message}</h6>
+          </div>
         
         <h2>Membres de l'équipage</h2>
-        <section class="member-list">
+        {/* <section class="member-list">
           <div class="member-item">Eleftheria</div>
           <div class="member-item">Gennadios</div>
           <div class="member-item">Lysimachos</div>
-        </section>
+        </section> */}
+        {/* <Container>
+          <Row>
+            <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
+            <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
+            <Col sm="4">.col-sm-4</Col>
+          </Row>
+        </Container> */}
+        <h4>Les membres de votre équipage: { memberList.join(',') }</h4>
+
 </main>
     </div>
   );
