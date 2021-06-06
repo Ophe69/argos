@@ -1,0 +1,16 @@
+.App {
+  text-align: center;
+}
+
+
+.image {
+  height: 3rem;
+  width: auto;
+}
+
+.formCountainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
