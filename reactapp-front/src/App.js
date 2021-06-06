@@ -1,12 +1,22 @@
 import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Input } from 'reactstrap'; //, Label
 
 
 function App() {
   const [memberName, setMemberName] = useState('');
   const [memberDescription, setMemberDescription] = useState(''); 
+
+  var handleSubmitClick = async () => {
+    const data = await fetch('/addMember', {
+      method: 'POST',
+      headers: {'Content-Type':'application/x-www-form-urlencoded'},
+      body: `memberName=${memberName}&memberDescription=${memberDescription}`
+    })
+      const response = await data.json();
+      console.log('response', response);
+  }
 
   return (
     <div className="App">
@@ -44,8 +54,8 @@ function App() {
               onClick={() =>{
                 setMemberName('');
                 setMemberDescription('');
-                //console.log('info user from front', memberName, memberDescription)
-                //handleSubmitClick();
+                //console.log('info user from front', memberName, memberDescription);
+                handleSubmitClick();
               }}
             >Ajouter</Button>
           </Form>
