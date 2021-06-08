@@ -21,7 +21,7 @@ router.post('/addMember', async function(req, res) {
     })
     var memberSaved = await newMember.save()
     var memberList = await membersModel.find();
-    console.log('memberList', memberList)
+    //console.log('memberList du back', memberList)
     //console.log('memberSaved:', memberSaved)
     exist = true;
     res.json({memberSaved, message: 'Bienvenue à bord!', memberList });
@@ -31,6 +31,12 @@ router.post('/addMember', async function(req, res) {
 
   
 });
+
+/* router.get('/crewMembers', async (req, res) => {
+  var memberList = await membersModel.find();
+    console.log('memberList', memberList)
+  res.json({memberList});
+}); */
 
 
 module.exports = router;

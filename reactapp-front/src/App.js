@@ -1,14 +1,18 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Button, Form, FormGroup, Input} from 'reactstrap'; //, Label, Container, Row, Col, ListGroup, ListGroupItem
+import { Button, Form, FormGroup, Input, ListGroup, ListGroupItem, ListGroupItemText} from 'reactstrap'; //, Label
 
 
 function App() {
   const [memberName, setMemberName] = useState('');
   const [memberDescription, setMemberDescription] = useState(''); 
   const [message, setMessage] = useState('');
-  const [memberList, setMemberList] = useState([]);
+  const [listCrewMembers, setListCrewMembers] = useState([]);
+  const [crewList, setCrewList] = useState('');
+
+  //const [crewName, setCrewName] = useState('');
+  //const [crewDescription, setCrewDescription] = useState('');
 
   var handleSubmitClick = async () => {
     const data = await fetch('/addMember', {
@@ -17,19 +21,52 @@ function App() {
       body: `memberName=${memberName}&memberDescription=${memberDescription}`
     })
       const response = await data.json();
-      console.log('response', response);
-      setMemberList(response.memberList);
+      console.log('responsePost', response);
+      setListCrewMembers(response.memberList);//.///////
+      //var listCrewMembers = response.memberList; //////////
       setMessage(response.message);
-  }
+      console.log('memberList arrive sur front', listCrewMembers)
 
-  var clickAddMember = (newMember) =>{
-    setMemberList([...memberList, newMember]);
+      
   }
-/*   var memberListChart = memberList.map((member, i)=>{
-    <ListGroup horizontal="lg">
-        <ListGroupItem tag="a" href="#">Cras justo odio</ListGroupItem>
-      </ListGroup>
-  }); */
+  var membersChart = listCrewMembers.map((member, i) =>{
+    /*return (
+      <ListGroupItem className= 'list' style={{backgroundColor: 'blue', width: '300px'}} >
+        <ListGroupItemText >
+          {member.memberName}
+        </ListGroupItemText>
+        <ListGroupItemText>
+          {member.memberDescription}
+        </ListGroupItemText>
+      </ListGroupItem>
+    )*/ ////////////////////
+    return(
+      <div className="crewName">
+        <h5>{member.memberName}</h5>
+        <p>{member.memberDescription}</p>
+      </div>
+    )
+  })
+
+/*   var clickAddMember = (newMember) =>{
+    setMemberList([...memberList, newMember]);
+  } */
+/* 
+    var displayCrewMembers = async() => {
+      const dataCrew = await fetch('/crewMembers')
+      const responseCrew = await dataCrew.json()
+      console.log('comming from get request', responseCrew)
+      setMemberList(responseCrew.memberList)
+
+      setCrewName(responseCrew.memberList.memberName);
+      setCrewDescription(responseCrew.memberList.memberDescription);
+    } */
+    /* var listMembers = memberList.map((member, i) =>{
+      return{memberName: memberList[1].memberName, memberDescription: memberList[2].memberDescription }
+    }) */
+    
+    
+  
   
 
   return (
@@ -68,30 +105,33 @@ function App() {
               onClick={() =>{
                 setMemberName('');
                 setMemberDescription('');
-                //console.log('info user from front', memberName, memberDescription);
+                console.log('info user from front', memberName, memberDescription);
                 handleSubmitClick();
-                clickAddMember();
+                //clickAddMember();
+                //displayCrewMembers();
               }}
             >Ajouter</Button>
           </Form>
           <div>
-            <h6>{message}</h6>
+            <h6 className="savedMessage">{message}</h6>
           </div>
-        
-        <h2>Membres de l'équipage</h2>
+          <div>
+            <h2>Membres de l'équipage</h2>
+       
         {/* <section class="member-list">
           <div class="member-item">Eleftheria</div>
           <div class="member-item">Gennadios</div>
           <div class="member-item">Lysimachos</div>
         </section> */}
-        {/* <Container>
-          <Row>
-            <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
-            <Col xs="6" sm="4">.col-6 .col-sm-4</Col>
-            <Col sm="4">.col-sm-4</Col>
-          </Row>
-        </Container> */}
-        <h4>Les membres de votre équipage: { memberList.join(',') }</h4>
+        
+            
+            {/* <div>
+              {membersChart}
+            </div> */}
+            <ListGroup horizontal>
+              <ListGroupItem className="memberTable">{membersChart}</ListGroupItem>
+            </ListGroup>
+          </div>
 
 </main>
     </div>
