@@ -19,6 +19,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "scripts": {
+    "start": "node ./bin/www",
+    "heroku-postbuild": "cd reactapp && npm install && npm run build"
+   },
+
   "proxy": "http://localhost:3000",
   "eslintConfig": {
     "extends": [
