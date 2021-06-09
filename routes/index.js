@@ -26,17 +26,18 @@ router.post('/addMember', async function(req, res) {
     exist = true;
     res.json({memberSaved, message: 'Bienvenue à bord!', memberList });
   } else {
+    var memberList = await membersModel.find();
     res.json({message : 'Membre déjà enregistré!', memberList});
   }
 
   
 });
 
-/* router.get('/crewMembers', async (req, res) => {
+router.get('/crewMembers', async (req, res) => {
   var memberList = await membersModel.find();
     console.log('memberList', memberList)
   res.json({memberList});
-}); */
+}); 
 
 
 module.exports = router;

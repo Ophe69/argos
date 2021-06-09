@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import { Button, Form, FormGroup, Input, ListGroup, ListGroupItem, ListGroupItemText} from 'reactstrap'; //, Label
+import { Button, Form, FormGroup, Input, ListGroup, ListGroupItem} from 'reactstrap'; //, Label, ListGroupItemText
 
 
 function App() {
@@ -9,10 +9,7 @@ function App() {
   const [memberDescription, setMemberDescription] = useState(''); 
   const [message, setMessage] = useState('');
   const [listCrewMembers, setListCrewMembers] = useState([]);
-  const [crewList, setCrewList] = useState('');
 
-  //const [crewName, setCrewName] = useState('');
-  //const [crewDescription, setCrewDescription] = useState('');
 
   var handleSubmitClick = async () => {
     const data = await fetch('/addMember', {
@@ -21,25 +18,16 @@ function App() {
       body: `memberName=${memberName}&memberDescription=${memberDescription}`
     })
       const response = await data.json();
-      console.log('responsePost', response);
-      setListCrewMembers(response.memberList);//.///////
-      //var listCrewMembers = response.memberList; //////////
+      //console.log('responsePost', response);
+      setListCrewMembers(response.memberList);
+      //var listCrewMembers = response.memberList; 
+      
       setMessage(response.message);
-      console.log('memberList arrive sur front', listCrewMembers)
+      //console.log('memberList arrive sur front', listCrewMembers)
 
       
   }
   var membersChart = listCrewMembers.map((member, i) =>{
-    /*return (
-      <ListGroupItem className= 'list' style={{backgroundColor: 'blue', width: '300px'}} >
-        <ListGroupItemText >
-          {member.memberName}
-        </ListGroupItemText>
-        <ListGroupItemText>
-          {member.memberDescription}
-        </ListGroupItemText>
-      </ListGroupItem>
-    )*/ ////////////////////
     return(
       <div className="crewName">
         <h5>{member.memberName}</h5>
@@ -48,9 +36,7 @@ function App() {
     )
   })
 
-/*   var clickAddMember = (newMember) =>{
-    setMemberList([...memberList, newMember]);
-  } */
+
 /* 
     var displayCrewMembers = async() => {
       const dataCrew = await fetch('/crewMembers')
@@ -60,10 +46,8 @@ function App() {
 
       setCrewName(responseCrew.memberList.memberName);
       setCrewDescription(responseCrew.memberList.memberDescription);
-    } */
-    /* var listMembers = memberList.map((member, i) =>{
-      return{memberName: memberList[1].memberName, memberDescription: memberList[2].memberDescription }
-    }) */
+    }
+ */
     
     
   
@@ -81,9 +65,9 @@ function App() {
 
         <h2>Ajouter un(e) Argonaute</h2>
           <Form inline className="formCountainer">
-            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-              {/* <Label for="memberName" className="mr-sm-2">Nom</Label> */}
-              <Input 
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0 formInput">
+              
+              <Input
               type="text" 
               name="memberName" 
               id="memberName" 
@@ -91,8 +75,8 @@ function App() {
               value={memberName} 
               onChange={e =>{setMemberName(e.target.value)}} />
             </FormGroup>
-            <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-              {/* <Label for="memberDescription" className="mr-sm-2">Description</Label> */}
+            <FormGroup className="mb-2 mr-sm-2 mb-sm-0 formInput">
+              
               <Input 
               type="text" 
               name="memberDescription" 
@@ -102,11 +86,19 @@ function App() {
               onChange={e =>{setMemberDescription(e.target.value)}} />
             </FormGroup>
             <Button
+              className="submitButton"
               onClick={() =>{
                 setMemberName('');
                 setMemberDescription('');
                 console.log('info user from front', memberName, memberDescription);
                 handleSubmitClick();
+                setTimeout(() => {
+                  setMessage('');
+                }, 3000);
+          
+                setTimeout(() => {
+                  
+                }, 3000)
                 //clickAddMember();
                 //displayCrewMembers();
               }}
@@ -117,23 +109,17 @@ function App() {
           </div>
           <div>
             <h2>Membres de l'équipage</h2>
-       
-        {/* <section class="member-list">
-          <div class="member-item">Eleftheria</div>
-          <div class="member-item">Gennadios</div>
-          <div class="member-item">Lysimachos</div>
-        </section> */}
-        
-            
-            {/* <div>
-              {membersChart}
-            </div> */}
+
             <ListGroup horizontal>
               <ListGroupItem className="memberTable">{membersChart}</ListGroupItem>
             </ListGroup>
           </div>
+          <div></div>
 
-</main>
+      </main>
+      <footer>
+        <p>Réalisé par Ophélia à New-Lugdunum en 2021 ap. JC</p>
+      </footer>
     </div>
   );
 }

@@ -8,8 +8,7 @@ var options = {
 
 
 // décommenter la ligne pour repasser à une connexion à la DB sans passer par les variables d'environnement
-//mongoose.connect(process.env.MONGODB_URL,
-mongoose.connect('mongodb+srv://ophelia:Pa$$word@cluster0.mfjzw.mongodb.net/argos?retryWrites=true&w=majority',
+mongoose.connect(process.env.MONGODB_URL,
    options,
    function(err) {
     if (err) {
