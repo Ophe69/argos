@@ -13,12 +13,12 @@
     "reactstrap": "^8.9.0",
     "web-vitals": "^1.1.2"
   },
-  "scripts": {
+  /* "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-  },
+  }, */
   "scripts": {
     "start": "node ./bin/www",
     "heroku-postbuild": "cd reactapp && npm install && npm run build"
